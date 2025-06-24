@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Post a Job</title>
+</head>
+<body>
+  <h2>Employer - Post a Job</h2>
+  <form id="employerForm">
+    <label>Company Name: <input type="text" id="company" required></label><br/>
+    <label>Contact Person: <input type="text" id="contact" required></label><br/>
+    <label>Job Title: <input type="text" id="jobTitle" required></label><br/>
+    <label>Location: <input type="text" id="location" required></label><br/>
+    <button type="submit">Submit</button>
+  </form>
+  
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyD1PVhemxn3npeuzQWFOv73R9sx4dorBVQ",
+    authDomain: "getrehired.firebaseapp.com",
+    projectId: "getrehired",
+    storageBucket: "getrehired.firebasestorage.app",
+    messagingSenderId: "201886402347",
+    appId: "1:201886402347:web:e01c865b4298c365af276e",
+    measurementId: "G-LCK2YD5SHC"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  document.getElementById("jobSeekerForm")?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    await addDoc(collection(db, "job_seekers"), {
+      name: document.getElementById("name").value,
+      age: document.getElementById("age").value,
+      phone: document.getElementById("phone").value,
+      skills: document.getElementById("skills").value,
+    });
+    alert("Job Seeker profile submitted!");
+  });
+
+  document.getElementById("employerForm")?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    await addDoc(collection(db, "employers"), {
+      company: document.getElementById("company").value,
+      contact: document.getElementById("contact").value,
+      jobTitle: document.getElementById("jobTitle").value,
+      location: document.getElementById("location").value,
+    });
+    alert("Job posted successfully!");
+  });
+</script>
+
+</body>
+</html>
